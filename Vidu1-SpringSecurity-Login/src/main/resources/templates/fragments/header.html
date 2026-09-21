@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+
+<header th:fragment="header" class="topbar">
+
+    <a th:href="@{/}" class="brand">
+        IOTSTAR SHOP
+    </a>
+
+    <div class="account"
+         sec:authorize="isAuthenticated()">
+
+        <strong th:if="${currentUser != null}"
+                th:text="${currentUser.fullName}">
+            User
+        </strong>
+
+        <span sec:authentication="name">
+            email
+        </span>
+
+        <form th:action="@{/logout}"
+              method="post">
+
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}">
+
+            <button type="submit"
+                    class="logout-button">
+                Đăng xuất
+            </button>
+
+        </form>
+
+    </div>
+
+    <a sec:authorize="!isAuthenticated()"
+       th:href="@{/login}">
+        Đăng nhập
+    </a>
+
+</header>
+
+</body>
+</html>
